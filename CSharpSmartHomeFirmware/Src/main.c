@@ -18,7 +18,9 @@
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
+#include "usb_device.h"
 #include "gpio.h"
+#include "stdio.h"
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
@@ -86,7 +88,13 @@ int main(void)
 
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
+  MX_USB_DEVICE_Init();
   /* USER CODE BEGIN 2 */
+
+  uint8_t DataToSend[40];
+  uint8_t MessageLength = 0;
+
+  MessageLength = sprintf(DataToSend, "Witaj w domu\n\r", 0);
 
   /* USER CODE END 2 */
 
@@ -97,6 +105,9 @@ int main(void)
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
+
+	CDC_Transmit_FS(DataToSend, MessageLength);
+	HAL_Delay(1000);
 
   }
   /* USER CODE END 3 */
